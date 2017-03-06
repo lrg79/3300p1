@@ -21,6 +21,8 @@
 //https://www.washingtonpost.com/news/local/wp/2015/06/02/the-states-that-spend-the-most-and-the-least-on-education-in-one-map/?utm_term=.78d5084cef01
 //source for navigating the stupid ass geojson file
 //http://loringdodge.azurewebsites.net/u-s-state-codes-for-d3-map/
+//please get lat and longs
+//http://www.latlong.net/
 var rawData;
 function generateMap(){
   var svg = d3.select("svg");
@@ -34,350 +36,400 @@ function generateMap(){
           "state": "Alabama",
           "spending": 8755,
           "score": 1603, 
-          "index" : 1
+          "index" : 1,
+          "participation": 7
         },
 
         {
           "state": "Alaska",
           "spending": 18175,
           "score": 1495, 
-          "index" : 2
+          "index" : 2,
+          "participation": 54
         },
 
         {
           "state": "Arizona",
           "spending": 7208,
           "score": 1551, 
-          "index" : 4
+          "index" : 4,
+          "participation": 36
         },
 
         {
           "state": "Arkansas",
           "spending": 9394,
           "score":1551, 
-          "index" : 5
+          "index" : 5,
+          "participation": 4
         },
 
         {
           "state": "California",
           "spending": 9220,
           "score": 1522, 
-          "index" : 6
+          "index" : 6,
+          "participation": 60
         },
 
         {
           "state": "Colorado",
           "spending": 9220,
           "score": 1621, 
-          "index" : 8
+          "index" : 8,
+          "participation": 14
         },
 
         {
           "state": "Connecticut",
           "spending": 16631,
           "score": 1532, 
-          "index" : 9
+          "index" : 9,
+          "participation": 88
         },
 
         {
           "state": "Delaware",
           "spending": 13833,
           "score": 1351, 
-          "index" : 10
+          "index" : 10,
+          "participation": 100
         },
 
         {
           "state": "Florida",
           "spending": 8433,
           "score": 1457, 
-          "index" : 12
+          "index" : 12,
+          "participation": 72
         },
 
         {
           "state": "Georgia",
           "spending": 9099,
           "score": 1452, 
-          "index" : 13
+          "index" : 13,
+          "participation": 77
         },
 
         {
           "state": "Hawaii",
           "spending": 11823,
           "score": 1453, 
-          "index" : 15
+          "index" : 15,
+          "participation": 63
         },
 
         {
           "state": "Idaho",
           "spending": 6791,
           "score": 1364, 
-          "index" : 16
+          "index" : 16,
+          "participation": 100
         },
 
         {
           "state": "Illinois",
           "spending": 12288,
           "score": 1807, 
-          "index" : 17
+          "index" : 17,
+          "participation": 5
         },
 
         {
           "state": "Indiana",
           "spending": 9566,
           "score": 1470, 
-          "index" : 18
+          "index" : 18,
+          "participation": 71
         },
 
         {
           "state": "Iowa",
           "spending": 10313,
           "score":1769, 
-          "index" : 19
+          "index" : 19,
+          "participation": 3
         },
 
         {
           "state": "Kansas",
           "spending": 9828,
           "score": 1752, 
-          "index" : 20
+          "index" : 20,
+          "participation": 5
         },
 
         {
           "state": "Kentucky",
           "spending": 9316,
           "score": 1741, 
-          "index" : 21
+          "index" : 21,
+          "participation": 5
         },
 
         {
           "state": "Louisiana",
           "spending": 10490,
           "score": 1655, 
-          "index" : 22
+          "index" : 22,
+          "participation": 5
         },
 
         {
           "state": "Maine",
           "spending": 12147,
           "score": 1380, 
-          "index" : 23
+          "index" : 23,
+          "participation": 96
         },
 
         {
           "state": "Maryland",
           "spending": 13829,
           "score": 1483, 
-          "index" : 24
+          "index" : 24,
+          "participation": 79
         },
 
         {
           "state": "Massachusetts",
           "spending": 14515,
           "score": 1553, 
-          "index" : 25
+          "index" : 25,
+          "participation": 84
         },
 
         {
           "state": "Michigan",
           "spending": 10948,
           "score": 1782, 
-          "index" : 26
+          "index" : 26,
+          "participation": 4
         },
 
         {
           "state": "Minnesota",
           "spending": 11089,
           "score": 1780, 
-          "index" : 27
+          "index" : 27,
+          "participation": 6
         },
 
         {
           "state": "Mississippi",
           "spending": 8130,
           "score": 1673, 
-          "index" : 28
+          "index" : 28,
+          "participation": 3
         },
 
         {
           "state": "Missouri",
           "spending": 9597,
           "score": 1773, 
-          "index" : 29
+          "index" : 29,
+          "participation": 4
         },
 
         {
           "state": "Montana",
           "spending": 10625,
           "score": 1595, 
-          "index" : 30
+          "index" : 30,
+          "participation": 18
         },
 
         {
           "state": "Nebraska",
           "spending": 11579,
           "score":  1734, 
-          "index" : 31
+          "index" : 31,
+          "participation": 4
         },
 
         {
           "state": "Nevada",
           "spending": 8339,
           "score":  1454, 
-          "index" : 32
+          "index" : 32,
+          "participation": 54
         },
 
         {
           "state": "New Hampshire",
           "spending": 13721,
           "score": 1567, 
-          "index" : 33
+          "index" : 33,
+          "participation": 70
         },
 
         {
           "state": "New Jersey",
           "spending": 17572,
           "score": 1521, 
-          "index" : 34
+          "index" : 34,
+          "participation": 79
         },
 
         {
           "state": "New Mexico",
           "spending": 9012,
           "score": 1621, 
-          "index" : 35
+          "index" : 35,
+          "participation": 12
         },
 
         {
           "state": "New York",
           "spending": 19818,
           "score": 1463, 
-          "index" : 36
+          "index" : 36,
+          "participation": 76
         },
 
         {
           "state": "North Carolina",
           "spending": 8390,
           "score": 1479, 
-          "index" : 37
+          "index" : 37,
+          "participation": 64
         },
 
         {
           "state": "North Dakota",
           "spending": 11980,
           "score": 1799, 
-          "index" : 38
+          "index" : 38,
+          "participation": 2
         },
 
         {
           "state": "Ohio",
           "spending": 11197,
           "score": 1635, 
-          "index" : 39
+          "index" : 39,
+          "participation": 15
         },
 
         {
           "state": "Oklahoma",
           "spending": 7672,
           "score": 1689, 
-          "index" : 40
+          "index" : 40,
+          "participation": 5
         },
 
         {
           "state": "Oregon",
           "spending": 9543,
           "score": 1539, 
-          "index" : 41
+          "index" : 41,
+          "participation": 48
         },
 
         {
           "state": "Pennsylvania",
           "spending": 13864,
           "score": 1485, 
-          "index" : 42
+          "index" : 42,
+          "participation": 71
         },
 
         {
           "state": "Rhode Island",
           "spending": 14415,
           "score": 1446, 
-          "index" : 44
+          "index" : 44,
+          "participation": 73
         },
 
         {
           "state": "South Carolina",
           "spending": 9514,
           "score": 1436, 
-          "index" : 45
+          "index" : 45,
+          "participation": 65
         },
 
         {
           "state": "South Dakota",
           "spending": 8470,
           "score": 1760, 
-          "index" : 46
+          "index" : 46,
+          "participation": 3
         },
 
         {
           "state": "Tennessee",
           "spending": 8208,
           "score":  1709, 
-          "index" : 47
+          "index" : 47,
+          "participation": 8
         },
 
         {
           "state": "Texas",
           "spending": 8299,
           "score": 1437, 
-          "index" : 48
+          "index" : 48,
+          "participation": 65
         },
 
         {
           "state": "Utah",
           "spending": 6555,
           "score": 1684, 
-          "index" : 49
+          "index" : 49,
+          "participation": 5
         },
 
         {
           "state": "Vermont",
           "spending": 16377,
           "score": 1540, 
-          "index" : 50
+          "index" : 50,
+          "participation": 63
         },
 
         {
           "state": "Virginia",
           "spending": 10960,
           "score": 1528, 
-          "index" : 51
+          "index" : 51,
+          "participation": 73
         },
 
         {
           "state": "Washington",
           "spending": 9672,
           "score": 1537, 
-          "index" : 53
+          "index" : 53,
+          "participation": 63
         },
 
         {
           "state": "West Virginia",
           "spending": 11132,
           "score": 1513, 
-          "index" : 54
+          "index" : 54,
+          "participation": 15
         },
 
         {
           "state": "Wisconson",
           "spending": 11071,
           "score": 1771, 
-          "index" : 55
+          "index" : 55,
+          "participation": 4
         },
 
         {
           "state": "Wyoming",
           "spending": 15700,
           "score": 1757, 
-          "index" : 56
+          "index" : 56,
+          "participation": 3
         }
     ];
 
@@ -394,6 +446,13 @@ function generateMap(){
     var minScore = d3.min(fundingData, function(d){
       return d.score;
     });
+
+    var stateSize = d3.scaleLinear().range([1,100]).domain([d3.min(fundingData,function(d){
+      return d.participation;
+    }), d3.max(fundingData, function(d){
+      return d.participation;
+    })]);
+
     console.log("min is ", minScore);
     var color = d3.scaleLinear().range(['red','blue']).domain([minScore, maxScore]);
 
@@ -438,6 +497,16 @@ function getColor(fundingData, id){
     }
   }
 }
+
+function getSize(fundingData, id){
+  for(var i = 0; i < fundingData.length; i++){
+    if(fundingData[i].index == id){
+      console.log("true ", fundingData[i].state, " ", fundingData[i].score);
+      return fundingData[i].participation;
+    }
+  }
+}
+
 
 
 
