@@ -501,7 +501,7 @@ function generateMap(){
   svg.append("g").attr("transform", "translate(50,0)").call(yAxis
     .ticks(5));
 
-  var sizeRange = d3.scaleLinear().range([5,20]).domain([d3.min(fundingData,function(d){
+  var sizeRange = d3.scaleLinear().range([5,25]).domain([d3.min(fundingData,function(d){
     return (d.participation);
   }), d3.max(fundingData, function(d){
     return (d.participation);
