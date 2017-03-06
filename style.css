@@ -1,0 +1,59 @@
+.state-borders {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+body{
+  font-family: 'Alegreya Sans', Calibri, sans-serif;
+  text-align:center;
+}
+h1{ font-size: 30px; }
+.label{ font-size: 14px;}
+
+/* translate labels so that map is more clear*/
+#label-Idaho{ transform: translate(5px,-14px); }
+#label-Maine{ transform: translate(0px,-14px); }
+#label-Delaware{ transform: translate(0px,-14px); }
+#label-Hawaii{ transform: translate(0px,-8px); }
+#label-RhodeIsland{ transform: translate(0px,40px); }
+#label-Texas{ transform: translate(-32px,17px); }
+#label-SouthCarolina{ transform: translate(57px,14px); }
+#label-Indiana{ transform: translate(38px,13px); }
+#label-NorthCarolina{ transform: translate(-58px,13px); }
+#label-Nevada{ transform: translate(-36px,13px); }
+#label-Georgia{ transform: translate(38px,12px); }
+#label-Florida{ transform: translate(29px,6px); }
+#label-Pennsylvania{ transform: translate(53px,8px); }
+#label-Maryland{ transform: translate(-45px,21px); }
+#label-NewYork{ transform: translate(0px,-11px); }
+#label-Alaska{ transform: translate(0px,-6px); }
+#label-NewJersey{ transform: translate(0px,-11px); }
+#label-Connecticut{ transform: translate(0px,42px); }
+#label-Vermont{ transform: translate(-2px,-10px); }
+#label-Massachusetts{ transform: translate(0px,42px); }
+#label-NewHampshire{ transform: translate(0px,-10px); }
+#label-WestVirginia{ transform: translate(46px,14px); }
+#label-Virginia{ transform: translate(35px,0px); }
+#label-Arizona{ transform: translate(0px,-5px); }
+#label-Ohio{ transform: translate(0px,-2px); }
+#label-Colorado{ transform: translate(30px,2px); }
+#label-California{ transform: translate(-42px,15px); }
+#label-Oregon{ transform: translate(-35px,12px); }
+#label-Washington{ transform: translate(42px,-2px); }
+#label-Arkansas{ transform: translate(-30px,7px); }
+#label-Alabama{ transform: translate(-25px,2px); }
+#label-NewMexico{ transform: translate(-33px,0px); }
+#label-Mississippi{ transform: translate(15px,0px); }
+#label-Utah{ transform: translate(20px,5px); }
+#label-Wisconsin{ transform: translate(35px,18px); }
+#label-Minnesota{ transform: translate(38px,12px); }
+#label-NorthDakota{ transform: translate(-28px,3px); }
+#label-Michigan{ transform: translate(0px,2px); }
+#label-Kentucky{ transform: translate(0px,2px); }
+#label-Kansas{ transform: translate(0px,2px); }
+#label-Iowa{ transform: translate(0px,2px); }
+
+

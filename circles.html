@@ -1,37 +1,5 @@
 <!DOCTYPE html>
-<style>
-
-.state-borders {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 0.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-body{
-  font-family: 'Alegreya Sans', Calibri, sans-serif;
-  text-align:center;
-}
-h1{ font-size: 30px; }
-.label{ font-size: 14px;}
-
-/* translate labels */
-#label-Idaho{ transform: translate(5px,-14px); }
-#label-Maine{ transform: translate(0px,-14px); }
-#label-Delaware{ transform: translate(0px,-14px); }
-#label-Hawaii{ transform: translate(0px,-8px); }
-#label-RhodeIsland{ transform: translate(0px,40px); }
-#label-Texas{ transform: translate(-32px,17px); }
-#label-SouthCarolina{ transform: translate(57px,14px); }
-#label-Indiana{ transform: translate(38px,13px); }
-#label-NorthCarolina{ transform: translate(-58px,13px); }
-#label-Nevada{ transform: translate(-36px,13px); }
-#label-Georgia{ transform: translate(38px,12px); }
-#label-Florida{ transform: translate(0px,10px); }
-
-
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 <h1>State investment in education vs average SAT score (2013)</h1>
 <svg width="960" height="600"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -48,6 +16,7 @@ h1{ font-size: 30px; }
         var fundingData = [
         {
           "state": "Alabama",
+          "abbreviation": "AL",
           "spending": 8755,
           "score": 1603, 
           "index" : 1,
@@ -56,6 +25,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Alaska",
+          "abbreviation": "AK",
           "spending": 18175,
           "score": 1495, 
           "index" : 2,
@@ -64,6 +34,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Arizona",
+          "abbreviation": "AZ",
           "spending": 7208,
           "score": 1551, 
           "index" : 4,
@@ -72,6 +43,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Arkansas",
+          "abbreviation": "AR",
           "spending": 9394,
           "score":1551, 
           "index" : 5,
@@ -80,6 +52,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "California",
+          "abbreviation": "CA",
           "spending": 9220,
           "score": 1522, 
           "index" : 6,
@@ -88,6 +61,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Colorado",
+          "abbreviation": "CO",
           "spending": 9220,
           "score": 1621, 
           "index" : 8,
@@ -96,6 +70,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Connecticut",
+          "abbreviation": "CT",
           "spending": 16631,
           "score": 1532, 
           "index" : 9,
@@ -104,6 +79,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Delaware",
+          "abbreviation": "DE",
           "spending": 13833,
           "score": 1351, 
           "index" : 10,
@@ -112,6 +88,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Florida",
+          "abbreviation": "FL",
           "spending": 8433,
           "score": 1457, 
           "index" : 12,
@@ -120,6 +97,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Georgia",
+          "abbreviation": "GA",
           "spending": 9099,
           "score": 1452, 
           "index" : 13,
@@ -128,6 +106,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Hawaii",
+          "abbreviation": "HI",
           "spending": 11823,
           "score": 1453, 
           "index" : 15,
@@ -136,6 +115,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Idaho",
+          "abbreviation": "ID",
           "spending": 6791,
           "score": 1364, 
           "index" : 16,
@@ -144,6 +124,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Illinois",
+          "abbreviation": "IL",
           "spending": 12288,
           "score": 1807, 
           "index" : 17,
@@ -152,6 +133,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Indiana",
+          "abbreviation": "IN",
           "spending": 9566,
           "score": 1470, 
           "index" : 18,
@@ -160,6 +142,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Iowa",
+          "abbreviation": "IA",
           "spending": 10313,
           "score":1769, 
           "index" : 19,
@@ -168,6 +151,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Kansas",
+          "abbreviation": "KS",
           "spending": 9828,
           "score": 1752, 
           "index" : 20,
@@ -176,6 +160,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Kentucky",
+          "abbreviation": "KY",
           "spending": 9316,
           "score": 1741, 
           "index" : 21,
@@ -184,6 +169,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Louisiana",
+          "abbreviation": "LA",
           "spending": 10490,
           "score": 1655, 
           "index" : 22,
@@ -192,6 +178,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Maine",
+          "abbreviation": "ME",
           "spending": 12147,
           "score": 1380, 
           "index" : 23,
@@ -200,6 +187,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Maryland",
+          "abbreviation": "MD",
           "spending": 13829,
           "score": 1483, 
           "index" : 24,
@@ -208,6 +196,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Massachusetts",
+          "abbreviation": "MA",
           "spending": 14515,
           "score": 1553, 
           "index" : 25,
@@ -216,6 +205,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Michigan",
+          "abbreviation": "MI",
           "spending": 10948,
           "score": 1782, 
           "index" : 26,
@@ -224,6 +214,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Minnesota",
+          "abbreviation": "MN",
           "spending": 11089,
           "score": 1780, 
           "index" : 27,
@@ -232,6 +223,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Mississippi",
+          "abbreviation": "MS",
           "spending": 8130,
           "score": 1673, 
           "index" : 28,
@@ -240,6 +232,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Missouri",
+          "abbreviation": "MO",
           "spending": 9597,
           "score": 1773, 
           "index" : 29,
@@ -248,6 +241,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Montana",
+          "abbreviation": "MT",
           "spending": 10625,
           "score": 1595, 
           "index" : 30,
@@ -256,6 +250,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Nebraska",
+          "abbreviation": "NE",
           "spending": 11579,
           "score":  1734, 
           "index" : 31,
@@ -264,6 +259,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Nevada",
+          "abbreviation": "NV",
           "spending": 8339,
           "score":  1454, 
           "index" : 32,
@@ -272,6 +268,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "New Hampshire",
+          "abbreviation": "NH",
           "spending": 13721,
           "score": 1567, 
           "index" : 33,
@@ -280,6 +277,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "New Jersey",
+          "abbreviation": "NJ",
           "spending": 17572,
           "score": 1521, 
           "index" : 34,
@@ -288,6 +286,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "New Mexico",
+          "abbreviation": "NM",
           "spending": 9012,
           "score": 1621, 
           "index" : 35,
@@ -296,6 +295,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "New York",
+          "abbreviation": "NY",
           "spending": 19818,
           "score": 1463, 
           "index" : 36,
@@ -304,6 +304,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "North Carolina",
+          "abbreviation": "NC",
           "spending": 8390,
           "score": 1479, 
           "index" : 37,
@@ -312,6 +313,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "North Dakota",
+          "abbreviation": "ND",
           "spending": 11980,
           "score": 1799, 
           "index" : 38,
@@ -320,6 +322,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Ohio",
+          "abbreviation": "OH",
           "spending": 11197,
           "score": 1635, 
           "index" : 39,
@@ -328,6 +331,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Oklahoma",
+          "abbreviation": "OK",
           "spending": 7672,
           "score": 1689, 
           "index" : 40,
@@ -336,6 +340,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Oregon",
+          "abbreviation": "OR",
           "spending": 9543,
           "score": 1539, 
           "index" : 41,
@@ -344,6 +349,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Pennsylvania",
+          "abbreviation": "PA",
           "spending": 13864,
           "score": 1485, 
           "index" : 42,
@@ -352,6 +358,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Rhode Island",
+          "abbreviation": "RI",
           "spending": 14415,
           "score": 1446, 
           "index" : 44,
@@ -360,6 +367,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "South Carolina",
+          "abbreviation": "SC",
           "spending": 9514,
           "score": 1436, 
           "index" : 45,
@@ -368,6 +376,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "South Dakota",
+          "abbreviation": "SD",
           "spending": 8470,
           "score": 1760, 
           "index" : 46,
@@ -376,6 +385,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Tennessee",
+          "abbreviation": "TN",
           "spending": 8208,
           "score":  1709, 
           "index" : 47,
@@ -384,6 +394,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Texas",
+          "abbreviation": "TX",
           "spending": 8299,
           "score": 1437, 
           "index" : 48,
@@ -392,6 +403,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Utah",
+          "abbreviation": "UT",
           "spending": 6555,
           "score": 1684, 
           "index" : 49,
@@ -400,6 +412,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Vermont",
+          "abbreviation": "VT",
           "spending": 16377,
           "score": 1540, 
           "index" : 50,
@@ -408,6 +421,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Virginia",
+          "abbreviation": "VA",
           "spending": 10960,
           "score": 1528, 
           "index" : 51,
@@ -416,6 +430,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Washington",
+          "abbreviation": "WA",
           "spending": 9672,
           "score": 1537, 
           "index" : 53,
@@ -424,6 +439,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "West Virginia",
+          "abbreviation": "WV",
           "spending": 11132,
           "score": 1513, 
           "index" : 54,
@@ -431,7 +447,8 @@ h1{ font-size: 30px; }
         },
 
         {
-          "state": "Wisconson",
+          "state": "Wisconsin",
+          "abbreviation": "WI",
           "spending": 11071,
           "score": 1771, 
           "index" : 55,
@@ -440,6 +457,7 @@ h1{ font-size: 30px; }
 
         {
           "state": "Wyoming",
+          "abbreviation": "WY",
           "spending": 15700,
           "score": 1757, 
           "index" : 56,
@@ -482,7 +500,8 @@ function generateMap(){
       .attr("cy", yRange(fundingData[i].score))
       .attr("r", sizeRange(fundingData[i].participation))
       .attr("fill", "blue")
-      .attr("opacity", .2);
+      .attr("opacity", .2)
+      .attr("id","circle-"+fundingData[i].state.replace(/ /g,''));
 
     svg.append("text")
       .text(fundingData[i].state)
@@ -491,7 +510,18 @@ function generateMap(){
       .attr("x", xRange(fundingData[i].spending))
       .attr("y", yRange(fundingData[i].score)-10)
       .attr("text-anchor","middle");
-  }  
+  }
+  svg.append("text")
+    .text("Amount spent per student (dollars)") 
+    .attr("x","480")
+    .attr("y","595")
+    .attr("text-anchor","middle"); 
+  svg.append("text")
+    .text("Average SAT score (2400 scale)") 
+    .attr("x","-275")
+    .attr("y","10")
+    .attr("transform","rotate(-90)")
+    .attr("text-anchor","middle"); 
 }
 
 generateMap();
