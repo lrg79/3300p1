@@ -9,8 +9,30 @@
   stroke-linecap: round;
   pointer-events: none;
 }
+body{
+  font-family: 'Alegreya Sans', Calibri, sans-serif;
+  text-align:center;
+}
+h1{ font-size: 30px; }
+.label{ font-size: 14px;}
+
+/* translate labels */
+#label-Idaho{ transform: translate(5px,-14px); }
+#label-Maine{ transform: translate(0px,-14px); }
+#label-Delaware{ transform: translate(0px,-14px); }
+#label-Hawaii{ transform: translate(0px,-8px); }
+#label-RhodeIsland{ transform: translate(0px,40px); }
+#label-Texas{ transform: translate(-32px,17px); }
+#label-SouthCarolina{ transform: translate(57px,14px); }
+#label-Indiana{ transform: translate(38px,13px); }
+#label-NorthCarolina{ transform: translate(-58px,13px); }
+#label-Nevada{ transform: translate(-36px,13px); }
+#label-Georgia{ transform: translate(38px,12px); }
+#label-Florida{ transform: translate(0px,10px); }
+
 
 </style>
+<h1>State investment in education vs average SAT score (2013)</h1>
 <svg width="960" height="600"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
@@ -464,8 +486,11 @@ function generateMap(){
 
     svg.append("text")
       .text(fundingData[i].state)
+      .attr("id","label-"+fundingData[i].state.replace(/ /g,''))
+      .attr("class","label")
       .attr("x", xRange(fundingData[i].spending))
-      .attr("y", yRange(fundingData[i].score));
+      .attr("y", yRange(fundingData[i].score)-10)
+      .attr("text-anchor","middle");
   }  
 }
 
