@@ -466,6 +466,18 @@
         }
     ];
 
+  var central = ["Illinois","Indiana","Iowa ","Kentucky","Michigan","Minnesota","Missouri ","Ohio","Wisconsin"];
+
+  var northern = ["Connecticut","Delaware ","Maine","Maryland","Massachusetts","New Hampshire","New Jersey","New York","Pennsylvania","Rhode Island ","Vermont"];
+
+  var pacific = ["Alaska","Arizona","California","Hawaii","Nevada","Oregon","Utah","Washington"]
+
+  var southern = ["Alabama","Arkansas","Florida","Georgia","Louisiana","Mississippi","North Carolina","South Carolina","Tennessee","Virginia","West Virginia"];
+
+  var western = ["Colorado","Idaho","Kansas","Montana","Nebraska","New Mexico","North Dakota","Oklahoma","South Dakota","Texas","Wyoming"];
+
+  var regions = [central, northern, pacific, southern, western];
+
 function generateMap(){
   var svg = d3.select("#plot");
   var legend = d3.select("#legend");
@@ -500,7 +512,7 @@ function generateMap(){
       .attr("cx", xRange(fundingData[i].spending))
       .attr("cy", yRange(fundingData[i].score))
       .attr("r", sizeRange(fundingData[i].participation))
-      .attr("fill", "blue")
+      .attr("fill", getColor(fundingData[i].state))
       .attr("opacity", .2)
       .attr("id","circle-"+fundingData[i].state.replace(/ /g,''));
 
@@ -555,12 +567,34 @@ function getSpending(fundingData, id){
   }
 }
 
-function getColor(fundingData, id){
-  for(var i = 0; i < fundingData.length; i++){
-    if(fundingData[i].index == id){
-      console.log("true ", fundingData[i].state, " ", fundingData[i].score);
-      return fundingData[i].score;
+function getColor(state){
+  var bool = 0;
+  console.log("hi");
+  for(var i = 0; i < regions.length; i++){
+    for(var j = 0; j < regions[i].length; j++){
+      if(regions[i][j].trim() === (state)){
+        console.log(state, " found");
+        if(i == 0){
+          return 'red';
+        }
+        if(i == 1){
+          return 'green';
+        }
+        if(i == 2){
+          return 'blue';
+        }
+        if(i == 3){
+          return 'purple';
+        }
+        if(i == 4){
+          return 'yellow';
+        }
+      }
     }
+  }
+
+  if(bool === 0){
+    console.log(state, " not found");
   }
 }
 
