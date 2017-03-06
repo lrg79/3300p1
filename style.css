@@ -11,7 +11,21 @@ body{
   text-align:center;
 }
 h1{ font-size: 30px; }
+
 .label{ font-size: 14px;}
+
+#plot{
+	margin: 0 auto;
+	display: block;
+}
+
+#legend{
+	border: 1px solid #cccccc;
+	position: absolute;
+	top: 0; left: 0;
+    margin-left: 950px;
+    margin-top: 90px;
+}
 
 /* translate labels so that map is more clear*/
 #label-Idaho{ transform: translate(5px,-14px); }

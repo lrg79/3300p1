@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="style.css">
 <h1>State investment in education vs average SAT score (2013)</h1>
-<svg width="960" height="600"></svg>
+<svg id="plot" width="960" height="600"></svg>
+<svg id="legend" width="350" height="250"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script>
@@ -466,8 +467,8 @@
     ];
 
 function generateMap(){
-  var svg = d3.select("svg");
-  //<svg width="960" height="600"></svg>
+  var svg = d3.select("#plot");
+  var legend = d3.select("#legend");
   var xRange = d3.scaleLinear().range([50,910]).domain([d3.min(fundingData,function(d){
     return  (d.spending);
   }), d3.max(fundingData, function(d){
@@ -511,17 +512,34 @@ function generateMap(){
       .attr("y", yRange(fundingData[i].score)-10)
       .attr("text-anchor","middle");
   }
+
   svg.append("text")
     .text("Amount spent per student (dollars)") 
     .attr("x","480")
     .attr("y","595")
     .attr("text-anchor","middle"); 
+
   svg.append("text")
     .text("Average SAT score (2400 scale)") 
     .attr("x","-275")
     .attr("y","10")
     .attr("transform","rotate(-90)")
     .attr("text-anchor","middle"); 
+
+  legend.append("text")
+    .text("LEGEND")
+    .attr("x","175")
+    .attr("y","20")
+    .attr("text-anchor","middle")
+    .style("font-size","13px")
+    .style("font-weight","bold");
+
+  legend.append("circle")
+    .attr("cx", "60")
+    .attr("cy", "50")
+    .attr("r","20")
+    .attr("fill","#000000")
+    .attr("opacity", 0.2);
 }
 
 generateMap();
