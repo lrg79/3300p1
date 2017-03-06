@@ -512,7 +512,7 @@ function generateMap(){
       .attr("cy", yRange(fundingData[i].score))
       .attr("r", sizeRange(fundingData[i].participation))
       .attr("fill", getColor(fundingData[i].state))
-      .attr("opacity", .2)
+      .attr("opacity", .4)
       .attr("id","circle-"+fundingData[i].state.replace(/ /g,''));
 
     svg.append("text")
@@ -584,19 +584,19 @@ function getColor(state){
       if(regions[i][j].trim() === (state)){
         console.log(state, " found");
         if(i == 0){
-          return 'red';
+          return '#FF4848';
         }
         if(i == 1){
-          return 'green';
+          return '#1FCB4A';
         }
         if(i == 2){
-          return 'blue';
+          return '#2966B8';
         }
         if(i == 3){
-          return 'purple';
+          return '#800080';
         }
         if(i == 4){
-          return 'yellow';
+          return '#CDD11B';
         }
       }
     }
