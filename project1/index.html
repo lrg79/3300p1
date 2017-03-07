@@ -637,8 +637,6 @@ generateMap();
 function getSpending(fundingData, id){
   for(var i = 0; i < fundingData.length; i++){
     if(fundingData[i].index == id){
-      // console.log("true");
-      // console.log(fundingData[i].state);
       return fundingData[i].spending;
     }
   }
@@ -646,11 +644,9 @@ function getSpending(fundingData, id){
 
 function getColor(state){
   var bool = 0;
-  // console.log("hi");
   for(var i = 0; i < regions.length; i++){
     for(var j = 0; j < regions[i].length; j++){
       if(regions[i][j].trim() === (state)){
-        // console.log(state, " found");
         if(i == 0){
           return '#FF4848';
         }
@@ -678,7 +674,6 @@ function getRegion(id){
     }
   }
 }
-
 
 //code for label arrangement adapted from http://bl.ocks.org/larskotthoff/11406992
 function arrangeLabels() {
