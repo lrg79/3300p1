@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <h1>State investment in education vs average SAT score (2013)</h1>
 <svg id="plot" width="960" height="600"></svg>
-
+<svg id="map" width="300" height="250"></svg>
 <script src="http://d3js.org/d3.v3.min.js"></script>  
   <script src="http://d3js.org/topojson.v1.min.js"></script>
 
@@ -481,9 +481,10 @@
 
   var regions = [central, northern, pacific, southern, western];
 
-function generateMap(){
+  var legendCircles = [2,15,30,45,61,79,100]
+
+function generateGraph(){
   var svg = d3.select("#plot");
-  var legend = d3.select("#legend");
   var xRange = d3.scaleLinear().range([50,910]).domain([d3.min(fundingData,function(d){
     return  (d.spending);
   }), d3.max(fundingData, function(d){
@@ -510,6 +511,8 @@ function generateMap(){
     return (d.participation);
   })]);
 
+  var sizeLegend = d3.scaleLinear().range([0,240]).domain([0,100]);
+
   for(var i = 0; i < fundingData.length; i++){
     svg.append("circle")
       .attr("cx", xRange(fundingData[i].spending))
@@ -527,8 +530,6 @@ function generateMap(){
       .attr("y", yRange(fundingData[i].score)-sizeRange(fundingData[i].participation))
       .attr("text-anchor","middle");
   }
-  arrangeLabels();
-
 
   svg.append("circle")
     .attr("cx", xRange(10700))
@@ -554,32 +555,67 @@ function generateMap(){
     .attr("transform","rotate(-90)")
     .attr("text-anchor","middle"); 
 
-  var legend = svg.append("g");
+  var legend = svg.append("g")
+  .attr("id","legend");
 
   legend.append("rect")
     .attr("x","700")
-    .attr("y","0")
+    .attr("y","-15")
     .attr("width","350")
-    .attr("height","250")
+    .attr("height","320")
     .attr("fill","none")
     .attr("stroke","#cccccc");
 
   legend.append("text")
-    .text("LEGEND")
+    .text("Percent of eligible students taking SAT")
     .attr("x","870")
-    .attr("y","20")
+    .attr("y","10")
     .attr("text-anchor","middle")
-    .style("font-size","13px")
-    .style("font-weight","bold");
+    .style("font-size","13px");
 
-  legend.append("circle")
-    .attr("cx", "760")
-    .attr("cy", "50")
-    .attr("r","20")
+  for(var j = 0; j < legendCircles.length; j++){
+    legend.append("circle")
+    .attr("cx", sizeLegend(legendCircles[j])+750)
+    .attr("cy", 40+sizeRange(100)-sizeRange(legendCircles[j]))
+    .attr("r",sizeRange(legendCircles[j]))
     .attr("fill","#000000")
     .attr("opacity", 0.2);
+  }
+
+  var legendAxis = d3.axisBottom(sizeLegend);
+  legend.append("g")
+    .attr("transform", "translate(750,65)")
+    .call(legendAxis.ticks(10));
 }
 
+function generateMap(){
+  // var svg = d3.select("#legend").append("g");
+  var svg = d3.select("#map");
+
+  var path = d3.geoPath();
+
+  d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
+    if (error) throw error;
+
+    svg.append("g")
+        .attr("class", "states")
+      .selectAll("path")
+      .data(topojson.feature(us, us.objects.states).features)
+      .enter().append("path")
+        .attr("d", path)
+        .attr("fill", function(d){
+          return getRegion(d.id);
+        });
+
+    svg.append("path")
+        .attr("class", "state-borders")
+        .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })))
+    rawData = us;
+  });
+}
+
+generateGraph();
+arrangeLabels();
 generateMap();
 
 
@@ -621,6 +657,14 @@ function getColor(state){
 
   if(bool === 0){
     // console.log(state, " not found");
+  }
+}
+
+function getRegion(id){
+  for(var i = 0; i < fundingData.length; i++){
+    if(fundingData[i].index == id){
+      return getColor(fundingData[i].state);
+    }
   }
 }
 
