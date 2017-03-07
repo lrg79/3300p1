@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="style.css">
+<h1>State investment in education vs average SAT score (2013)</h1>
+<svg id="plot" width="960" height="600"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script>
+//source for SATS
+//http://www.ipsr.ku.edu/ksdata/ksah/education/6ed16.pdf
+//source for funding
+//https://www.washingtonpost.com/news/local/wp/2015/06/02/the-states-that-spend-the-most-and-the-least-on-education-in-one-map/?utm_term=.78d5084cef01
+//source for navigating the stupid ass geojson file
+//http://loringdodge.azurewebsites.net/u-s-state-codes-for-d3-map/
+//please get lat and longs
+//http://www.latlong.net/
+        var fundingData = [
+        {
+          "state": "Alabama",
+          "abbreviation": "AL",
+          "spending": 8755,
+          "score": 1603, 
+          "index" : 1,
+          "participation": 7,
+          "reading": 544,
+          "math": 534,
+          "writing": 530
+        },
+        {
+          "state": "Alaska",
+          "abbreviation": "AK",
+          "spending": 18175,
+          "score": 1495, 
+          "index" : 2,
+          "participation": 54,
+          "reading": 508,
+          "math": 505,
+          "writing": 482
+        },
+        {
+          "state": "Arizona",
+          "abbreviation": "AZ",
+          "spending": 7208,
+          "score": 1551, 
+          "index" : 4,
+          "participation": 36,
+          "reading": 521,
+          "math": 528,
+          "writing": 502
+        },
+        {
+          "state": "Arkansas",
+          "abbreviation": "AR",
+          "spending": 9394,
+          "score":1551, 
+          "index" : 5,
+          "participation": 4,
+          "reading": 572,
+          "math": 570,
+          "writing": 555
+        },
+        {
+          "state": "California",
+          "abbreviation": "CA",
+          "spending": 9220,
+          "score": 1522, 
+          "index" : 6,
+          "participation": 60,
+          "reading": 498,
+          "math": 512,
+          "writing": 495
+        },
+        {
+          "state": "Colorado",
+          "abbreviation": "CO",
+          "spending": 9220,
+          "score": 1621, 
+          "index" : 8,
+          "participation": 14,
+          "reading": 578,
+          "math": 581,
+          "writing": 562
+        },
+        {
+          "state": "Connecticut",
+          "abbreviation": "CT",
+          "spending": 16631,
+          "score": 1532, 
+          "index" : 9,
+          "participation": 88,
+          "reading": 508,
+          "math": 512,
+          "writing": 512
+        },
+        {
+          "state": "Delaware",
+          "abbreviation": "DE",
+          "spending": 13833,
+          "score": 1351, 
+          "index" : 10,
+          "participation": 100,
+          "reading": 451,
+          "math": 457,
+          "writing": 443
+        },
+        {
+          "state": "Florida",
+          "abbreviation": "FL",
+          "spending": 8433,
+          "score": 1457, 
+          "index" : 12,
+          "participation": 72,
+          "reading": 492,
+          "math": 490,
+          "writing": 475
+        },
+        {
+          "state": "Georgia",
+          "abbreviation": "GA",
+          "spending": 9099,
+          "score": 1452, 
+          "index" : 13,
+          "participation": 77,
+          "reading": 490,
+          "math": 487,
+          "writing": 475
+        },
+        {
+          "state": "Hawaii",
+          "abbreviation": "HI",
+          "spending": 11823,
+          "score": 1453, 
+          "index" : 15,
+          "participation": 63,
+          "reading": 481,
+          "math": 504,
+          "writing": 468
+        },
+        {
+          "state": "Idaho",
+          "abbreviation": "ID",
+          "spending": 6791,
+          "score": 1364, 
+          "index" : 16,
+          "participation": 100,
+          "reading": 454,
+          "math": 459,
+          "writing": 451
+        },
+        {
+          "state": "Illinois",
+          "abbreviation": "IL",
+          "spending": 12288,
+          "score": 1807, 
+          "index" : 17,
+          "participation": 5,
+          "reading": 600,
+          "math": 617,
+          "writing": 590
+        },
+        {
+          "state": "Indiana",
+          "abbreviation": "IN",
+          "spending": 9566,
+          "score": 1470, 
+          "index" : 18,
+          "participation": 71,
+          "reading": 493,
+          "math": 500,
+          "writing": 477
+        },
+        {
+          "state": "Iowa",
+          "abbreviation": "IA",
+          "spending": 10313,
+          "score":1769, 
+          "index" : 19,
+          "participation": 3,
+          "reading": 592,
+          "math": 601,
+          "writing": 570
+        },
+        {
+          "state": "Kansas",
+          "abbreviation": "KS",
+          "spending": 9828,
+          "score": 1752, 
+          "index" : 20,
+          "participation": 5,
+          "reading": 589,
+          "math": 595,
+          "writing": 568
+        },
+        {
+          "state": "Kentucky",
+          "abbreviation": "KY",
+          "spending": 9316,
+          "score": 1741, 
+          "index" : 21,
+          "participation": 5,
+          "reading": 585,
+          "math": 584,
+          "writing": 572
+        },
+        {
+          "state": "Louisiana",
+          "abbreviation": "LA",
+          "spending": 10490,
+          "score": 1655, 
+          "index" : 22,
+          "participation": 5,
+          "reading": 556,
+          "math": 553,
+          "writing": 546
+        },
+        {
+          "state": "Maine",
+          "abbreviation": "ME",
+          "spending": 12147,
+          "score": 1380, 
+          "index" : 23,
+          "participation": 96,
+          "reading": 462,
+          "math": 467,
+          "writing": 546
+        },
+        {
+          "state": "Maryland",
+          "abbreviation": "MD",
+          "spending": 13829,
+          "score": 1483, 
+          "index" : 24,
+          "participation": 79,
+          "reading": 497,
+          "math": 500,
+          "writing": 486
+        },
+        {
+          "state": "Massachusetts",
+          "abbreviation": "MA",
+          "spending": 14515,
+          "score": 1553, 
+          "index" : 25,
+          "participation": 84,
+          "reading": 515,
+          "math": 529,
+          "writing": 509
+        },
+        {
+          "state": "Michigan",
+          "abbreviation": "MI",
+          "spending": 10948,
+          "score": 1782, 
+          "index" : 26,
+          "participation": 4,
+          "reading": 590,
+          "math": 610,
+          "writing": 582
+        },
+        {
+          "state": "Minnesota",
+          "abbreviation": "MN",
+          "spending": 11089,
+          "score": 1780, 
+          "index" : 27,
+          "participation": 6,
+          "reading": 595,
+          "math": 608,
+          "writing": 577
+        },
+        {
+          "state": "Mississippi",
+          "abbreviation": "MS",
+          "spending": 8130,
+          "score": 1673, 
+          "index" : 28,
+          "participation": 3,
+          "reading": 568,
+          "math": 547,
+          "writing": 558
+        },
+        {
+          "state": "Missouri",
+          "abbreviation": "MO",
+          "spending": 9597,
+          "score": 1773, 
+          "index" : 29,
+          "participation": 4,
+          "reading": 596,
+          "math": 595,
+          "writing": 582
+        },
+        {
+          "state": "Montana",
+          "abbreviation": "MT",
+          "spending": 10625,
+          "score": 1595, 
+          "index" : 30,
+          "participation": 18,
+          "reading": 539,
+          "math": 540,
+          "writing": 516
+        },
+        {
+          "state": "Nebraska",
+          "abbreviation": "NE",
+          "spending": 11579,
+          "score":  1734, 
+          "index" : 31,
+          "participation": 4,
+          "reading": 584,
+          "math": 583,
+          "writing": 567
+        },
+        {
+          "state": "Nevada",
+          "abbreviation": "NV",
+          "spending": 8339,
+          "score":  1454, 
+          "index" : 32,
+          "participation": 54,
+          "reading": 492,
+          "math": 494,
+          "writing": 468
+        },
+        {
+          "state": "New Hampshire",
+          "abbreviation": "NH",
+          "spending": 13721,
+          "score": 1567, 
+          "index" : 33,
+          "participation": 70,
+          "reading": 524,
+          "math": 528,
+          "writing": 515
+        },
+        {
+          "state": "New Jersey",
+          "abbreviation": "NJ",
+          "spending": 17572,
+          "score": 1521, 
+          "index" : 34,
+          "participation": 79,
+          "reading": 499,
+          "math": 522,
+          "writing": 500
+        },
+        {
+          "state": "New Mexico",
+          "abbreviation": "NM",
+          "spending": 9012,
+          "score": 1621, 
+          "index" : 35,
+          "participation": 12,
+          "reading": 550,
+          "math": 545,
+          "writing": 531
+        },
+        {
+          "state": "New York",
+          "abbreviation": "NY",
+          "spending": 19818,
+          "score": 1463, 
+          "index" : 36,
+          "participation": 76,
+          "reading": 485,
+          "math": 501,
+          "writing": 477
+        },
+        {
+          "state": "North Carolina",
+          "abbreviation": "NC",
+          "spending": 8390,
+          "score": 1479, 
+          "index" : 37,
+          "participation": 64,
+          "reading": 495,
+          "math": 506,
+          "writing": 478
+        },
+        {
+          "state": "North Dakota",
+          "abbreviation": "ND",
+          "spending": 11980,
+          "score": 1799, 
+          "index" : 38,
+          "participation": 2,
+          "reading": 609,
+          "math": 609,
+          "writing": 581
+        },
+        {
+          "state": "Ohio",
+          "abbreviation": "OH",
+          "spending": 11197,
+          "score": 1635, 
+          "index" : 39,
+          "participation": 15,
+          "reading": 548,
+          "math": 556,
+          "writing": 531
+        },
+        {
+          "state": "Oklahoma",
+          "abbreviation": "OK",
+          "spending": 7672,
+          "score": 1689, 
+          "index" : 40,
+          "participation": 5,
+          "reading": 571,
+          "math": 569,
+          "writing": 549
+        },
+        {
+          "state": "Oregon",
+          "abbreviation": "OR",
+          "spending": 9543,
+          "score": 1539, 
+          "index" : 41,
+          "participation": 48,
+          "reading": 520,
+          "math": 520,
+          "writing": 499
+        },
+        {
+          "state": "Pennsylvania",
+          "abbreviation": "PA",
+          "spending": 13864,
+          "score": 1485, 
+          "index" : 42,
+          "participation": 71,
+          "reading": 494,
+          "math": 504,
+          "writing": 482
+        },
+        {
+          "state": "Rhode Island",
+          "abbreviation": "RI",
+          "spending": 14415,
+          "score": 1446, 
+          "index" : 44,
+          "participation": 73,
+          "reading": 491,
+          "math": 490,
+          "writing": 487
+        },
+        {
+          "state": "South Carolina",
+          "abbreviation": "SC",
+          "spending": 9514,
+          "score": 1436, 
+          "index" : 45,
+          "participation": 65,
+          "reading": 484,
+          "math": 487,
+          "writing": 465
+        },
+        {
+          "state": "South Dakota",
+          "abbreviation": "SD",
+          "spending": 8470,
+          "score": 1760, 
+          "index" : 46,
+          "participation": 3,
+          "reading": 592,
+          "math": 601,
+          "writing": 567
+        },
+        {
+          "state": "Tennessee",
+          "abbreviation": "TN",
+          "spending": 8208,
+          "score":  1709, 
+          "index" : 47,
+          "participation": 8,
+          "reading": 574,
+          "math": 569,
+          "writing": 566
+        },
+        {
+          "state": "Texas",
+          "abbreviation": "TX",
+          "spending": 8299,
+          "score": 1437, 
+          "index" : 48,
+          "participation": 65,
+          "reading": 477,
+          "math": 499,
+          "writing": 461
+        },
+        {
+          "state": "Utah",
+          "abbreviation": "UT",
+          "spending": 6555,
+          "score": 1684, 
+          "index" : 49,
+          "participation": 5,
+          "reading": 569,
+          "math": 566,
+          "writing": 549
+        },
+        {
+          "state": "Vermont",
+          "abbreviation": "VT",
+          "spending": 16377,
+          "score": 1540, 
+          "index" : 50,
+          "participation": 63,
+          "reading": 516,
+          "math": 519,
+          "writing": 505
+        },
+        {
+          "state": "Virginia",
+          "abbreviation": "VA",
+          "spending": 10960,
+          "score": 1528, 
+          "index" : 51,
+          "participation": 73,
+          "reading": 516,
+          "math": 514,
+          "writing": 498
+        },
+        {
+          "state": "Washington",
+          "abbreviation": "WA",
+          "spending": 9672,
+          "score": 1537, 
+          "index" : 53,
+          "participation": 63,
+          "reading": 515,
+          "math": 523,
+          "writing": 499
+        },
+        {
+          "state": "West Virginia",
+          "abbreviation": "WV",
+          "spending": 11132,
+          "score": 1513, 
+          "index" : 54,
+          "participation": 15,
+          "reading": 514,
+          "math": 501,
+          "writing": 498
+        },
+        {
+          "state": "Wisconsin",
+          "abbreviation": "WI",
+          "spending": 11071,
+          "score": 1771, 
+          "index" : 55,
+          "participation": 4,
+          "reading": 591,
+          "math": 604,
+          "writing": 576
+        },
+        {
+          "state": "Wyoming",
+          "abbreviation": "WY",
+          "spending": 15700,
+          "score": 1757, 
+          "index" : 56,
+          "participation": 3,
+          "reading": 581,
+          "math": 588,
+          "writing": 588
+        }
+    ];
+  var central = ["Illinois","Indiana","Iowa ","Kentucky","Michigan","Minnesota","Missouri ","Ohio","Wisconsin"];
+  var northern = ["Connecticut","Delaware ","Maine","Maryland","Massachusetts","New Hampshire","New Jersey","New York","Pennsylvania","Rhode Island ","Vermont"];
+  var pacific = ["Alaska","Arizona","California","Hawaii","Nevada","Oregon","Utah","Washington"]
+  var southern = ["Alabama","Arkansas","Florida","Georgia","Louisiana","Mississippi","North Carolina","South Carolina","Tennessee","Virginia","West Virginia"];
+  var western = ["Colorado","Idaho","Kansas","Montana","Nebraska","New Mexico","North Dakota","Oklahoma","South Dakota","Texas","Wyoming"];
+  var regions = [central, northern, pacific, southern, western];
+function generateMap(){
+  var svg = d3.select("#plot");
+  var legend = d3.select("#legend");
+  var xRange = d3.scaleLinear().range([50,910]).domain([d3.min(fundingData,function(d){
+    return  (d.spending);
+  }), d3.max(fundingData, function(d){
+    return  (d.spending);
+  })]);
+  var yRange = d3.scaleLinear().range([550,50]).domain([d3.min(fundingData,function(d){
+    return (d.score);
+  }), d3.max(fundingData, function(d){
+    return (d.score);
+  })]);
+  var xAxis = d3.axisBottom(xRange);
+  svg.append("g").attr("transform", "translate(0,550)").call(xAxis
+    .ticks(5));
+  var yAxis = d3.axisLeft(yRange);
+  svg.append("g").attr("transform", "translate(50,0)").call(yAxis
+    .ticks(5));
+  var sizeRange = d3.scaleLinear().range([5,20]).domain([d3.min(fundingData,function(d){
+    return (d.participation);
+  }), d3.max(fundingData, function(d){
+    return (d.participation);
+  })]);
+  for(var i = 0; i < fundingData.length; i++){
+    svg.append("circle")
+      .attr("cx", xRange(fundingData[i].spending))
+      .attr("cy", yRange(fundingData[i].score))
+      .attr("r", sizeRange(fundingData[i].participation))
+      .attr("fill", getColor(fundingData[i].state))
+      .attr("opacity", .4)
+      .attr("id","circle-"+fundingData[i].state.replace(/ /g,''));
+    svg.append("text")
+      .text(fundingData[i].state)
+      .attr("id","label-"+fundingData[i].state.replace(/ /g,''))
+      .attr("class","label")
+      .attr("x", xRange(fundingData[i].spending))
+      .attr("y", yRange(fundingData[i].score)-10)
+      .attr("text-anchor","middle");
+  }
+  svg.append("text")
+    .text("Amount spent per student (dollars)") 
+    .attr("x","480")
+    .attr("y","595")
+    .attr("text-anchor","middle"); 
+  svg.append("text")
+    .text("Average SAT score (2400 scale)") 
+    .attr("x","-275")
+    .attr("y","10")
+    .attr("transform","rotate(-90)")
+    .attr("text-anchor","middle"); 
+  var legend = svg.append("g");
+  legend.append("rect")
+    .attr("x","700")
+    .attr("y","0")
+    .attr("width","350")
+    .attr("height","250")
+    .attr("fill","none")
+    .attr("stroke","#cccccc");
+  legend.append("text")
+    .text("LEGEND")
+    .attr("x","870")
+    .attr("y","20")
+    .attr("text-anchor","middle")
+    .style("font-size","13px")
+    .style("font-weight","bold");
+  legend.append("circle")
+    .attr("cx", "760")
+    .attr("cy", "50")
+    .attr("r","20")
+    .attr("fill","#000000")
+    .attr("opacity", 0.2);
+}
+generateMap();
+function getSpending(fundingData, id){
+  for(var i = 0; i < fundingData.length; i++){
+    if(fundingData[i].index == id){
+      console.log("true");
+      console.log(fundingData[i].state);
+      return fundingData[i].spending;
+    }
+  }
+}
+function getColor(state){
+  var bool = 0;
+  console.log("hi");
+  for(var i = 0; i < regions.length; i++){
+    for(var j = 0; j < regions[i].length; j++){
+      if(regions[i][j].trim() === (state)){
+        console.log(state, " found");
+        if(i == 0){
+          return '#FF4848';
+        }
+        if(i == 1){
+          return '#1FCB4A';
+        }
+        if(i == 2){
+          return '#2966B8';
+        }
+        if(i == 3){
+          return '#800080';
+        }
+        if(i == 4){
+          return '#CDD11B';
+        }
+      }
+    }
+  }
+  if(bool === 0){
+    console.log(state, " not found");
+  }
+}
+</script>
+</html>
