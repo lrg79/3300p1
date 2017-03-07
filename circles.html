@@ -543,13 +543,13 @@ function generateGraph(){
     .attr("text-anchor","middle");
 
   svg.append("text")
-    .text("Amount spent per student (dollars)") 
+    .text("Amount Spent Per Student (Dollars)") 
     .attr("x","480")
     .attr("y","595")
     .attr("text-anchor","middle"); 
 
   svg.append("text")
-    .text("Average SAT score (2400 scale)") 
+    .text("Average SAT Score (2400 Scale)") 
     .attr("x","-275")
     .attr("y","10")
     .attr("transform","rotate(-90)")
@@ -560,16 +560,30 @@ function generateGraph(){
 
   legend.append("rect")
     .attr("x","700")
-    .attr("y","-15")
+    .attr("y","-5")
     .attr("width","350")
     .attr("height","320")
     .attr("fill","none")
     .attr("stroke","#cccccc");
 
   legend.append("text")
+    .text("KEY")
+    .attr("x","870")
+    .attr("y","15")
+    .attr("text-anchor","middle")
+    .style("font-size","13px")
+    .style("font-weight","bold");
+
+  legend.append("text")
     .text("Percent of eligible students taking SAT")
     .attr("x","870")
-    .attr("y","10")
+    .attr("y","100")
+    .attr("text-anchor","middle")
+    .style("font-size","13px");
+  legend.append("text")
+    .text("Regions of the US by color")
+    .attr("x","870")
+    .attr("y","300")
     .attr("text-anchor","middle")
     .style("font-size","13px");
 

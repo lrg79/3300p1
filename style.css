@@ -29,7 +29,7 @@ h1{ font-size: 30px; }
 #map{
   position: absolute;
   top: 0;
-  transform: translate(285px,215px);
+  transform: translate(285px,210px);
 }
 
 /* translate labels so that map is more clear*/
