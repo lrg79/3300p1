@@ -2,6 +2,10 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <h1>State investment in education vs average SAT score (2013)</h1>
 <svg id="plot" width="960" height="600"></svg>
+<svg id="bars" width="960" height="500"></svg>
+<script src="http://d3js.org/d3.v3.min.js"></script>  
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script>
@@ -13,7 +17,7 @@
 //http://loringdodge.azurewebsites.net/u-s-state-codes-for-d3-map/
 //please get lat and longs
 //http://www.latlong.net/
-        var fundingData = [
+var fundingData = [
         {
           "state": "Alabama",
           "abbreviation": "AL",
@@ -565,12 +569,19 @@
           "writing": 588
         }
     ];
+
   var central = ["Illinois","Indiana","Iowa ","Kentucky","Michigan","Minnesota","Missouri ","Ohio","Wisconsin"];
+
   var northern = ["Connecticut","Delaware ","Maine","Maryland","Massachusetts","New Hampshire","New Jersey","New York","Pennsylvania","Rhode Island ","Vermont"];
+
   var pacific = ["Alaska","Arizona","California","Hawaii","Nevada","Oregon","Utah","Washington"]
+
   var southern = ["Alabama","Arkansas","Florida","Georgia","Louisiana","Mississippi","North Carolina","South Carolina","Tennessee","Virginia","West Virginia"];
+
   var western = ["Colorado","Idaho","Kansas","Montana","Nebraska","New Mexico","North Dakota","Oklahoma","South Dakota","Texas","Wyoming"];
+
   var regions = [central, northern, pacific, southern, western];
+
 function generateMap(){
   var svg = d3.select("#plot");
   var legend = d3.select("#legend");
@@ -579,22 +590,27 @@ function generateMap(){
   }), d3.max(fundingData, function(d){
     return  (d.spending);
   })]);
+
   var yRange = d3.scaleLinear().range([550,50]).domain([d3.min(fundingData,function(d){
     return (d.score);
   }), d3.max(fundingData, function(d){
     return (d.score);
   })]);
+
   var xAxis = d3.axisBottom(xRange);
   svg.append("g").attr("transform", "translate(0,550)").call(xAxis
     .ticks(5));
+
   var yAxis = d3.axisLeft(yRange);
   svg.append("g").attr("transform", "translate(50,0)").call(yAxis
     .ticks(5));
+
   var sizeRange = d3.scaleLinear().range([5,20]).domain([d3.min(fundingData,function(d){
     return (d.participation);
   }), d3.max(fundingData, function(d){
     return (d.participation);
   })]);
+
   for(var i = 0; i < fundingData.length; i++){
     svg.append("circle")
       .attr("cx", xRange(fundingData[i].spending))
@@ -603,26 +619,44 @@ function generateMap(){
       .attr("fill", getColor(fundingData[i].state))
       .attr("opacity", .4)
       .attr("id","circle-"+fundingData[i].state.replace(/ /g,''));
+
     svg.append("text")
-      .text(fundingData[i].state)
+      .text(fundingData[i].abbreviation)
       .attr("id","label-"+fundingData[i].state.replace(/ /g,''))
       .attr("class","label")
       .attr("x", xRange(fundingData[i].spending))
-      .attr("y", yRange(fundingData[i].score)-10)
+      .attr("y", yRange(fundingData[i].score)-sizeRange(fundingData[i].participation))
       .attr("text-anchor","middle");
   }
+  arrangeLabels();
+
+
+  svg.append("circle")
+    .attr("cx", xRange(10700))
+    .attr("cy", yRange(1498))
+    .attr("r","3");
+  svg.append("text")
+    .text("U.S. Average")
+    .attr("x",xRange(10700))
+    .attr("y", yRange(1498)+15)
+    .style("font-size","13px")
+    .attr("text-anchor","middle");
+
   svg.append("text")
     .text("Amount spent per student (dollars)") 
     .attr("x","480")
     .attr("y","595")
     .attr("text-anchor","middle"); 
+
   svg.append("text")
     .text("Average SAT score (2400 scale)") 
     .attr("x","-275")
     .attr("y","10")
     .attr("transform","rotate(-90)")
     .attr("text-anchor","middle"); 
+
   var legend = svg.append("g");
+
   legend.append("rect")
     .attr("x","700")
     .attr("y","0")
@@ -630,6 +664,7 @@ function generateMap(){
     .attr("height","250")
     .attr("fill","none")
     .attr("stroke","#cccccc");
+
   legend.append("text")
     .text("LEGEND")
     .attr("x","870")
@@ -637,6 +672,7 @@ function generateMap(){
     .attr("text-anchor","middle")
     .style("font-size","13px")
     .style("font-weight","bold");
+
   legend.append("circle")
     .attr("cx", "760")
     .attr("cy", "50")
@@ -644,23 +680,27 @@ function generateMap(){
     .attr("fill","#000000")
     .attr("opacity", 0.2);
 }
+
 generateMap();
+
+
 function getSpending(fundingData, id){
   for(var i = 0; i < fundingData.length; i++){
     if(fundingData[i].index == id){
-      console.log("true");
-      console.log(fundingData[i].state);
+      // console.log("true");
+      // console.log(fundingData[i].state);
       return fundingData[i].spending;
     }
   }
 }
+
 function getColor(state){
   var bool = 0;
-  console.log("hi");
+  // console.log("hi");
   for(var i = 0; i < regions.length; i++){
     for(var j = 0; j < regions[i].length; j++){
       if(regions[i][j].trim() === (state)){
-        console.log(state, " found");
+        // console.log(state, " found");
         if(i == 0){
           return '#FF4848';
         }
@@ -679,9 +719,115 @@ function getColor(state){
       }
     }
   }
+
   if(bool === 0){
-    console.log(state, " not found");
+    // console.log(state, " not found");
   }
 }
+
+function generateBars(fundingData){
+  //code based off of: https://bl.ocks.org/mbostock/3885304
+  //<svg id="bars" width="960" height="500"></svg>
+  var svg = d3.select("#bars");
+  var xScale = d3.scaleLinear().range([60,960]);
+  var yScale = d3.scaleLinear().range([50,450]).domain([800,0]);
+
+  var count = -1;
+  var xAxis = d3.axisBottom(xScale);
+  svg.append("g").attr("transform", "translate(0,450)").call(xAxis
+    .ticks(49)
+    .tickFormat(function(d){
+      if(count < 49){
+        count++;
+        console.log(fundingData[count].state);
+        return fundingData[count].state;
+      }
+    }))
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("transform", "rotate(-65)");
+
+  var yAxis = d3.axisLeft(yScale);
+  svg.append("g").attr("transform", "translate(60,0)").call(yAxis
+    .ticks(10)
+    );
+
+  var xpos = 60;
+  for(var i = 0; i < fundingData.length; i++){
+    var width = 6;
+    var reading = fundingData[i].reading;
+    var writing = fundingData[i].writing;
+    var math = fundingData[i].math;
+    svg.append("rect")
+      .attr("x", xpos)
+      .attr("y", yScale(reading))
+      .attr("width", width)
+      .attr("height", 450 - yScale(reading))
+      .attr("fill", "red")
+      .attr("opacity", .4);
+
+    xpos+=width;
+
+    svg.append("rect")
+      .attr("x", xpos)
+      .attr("y", yScale(math))
+      .attr("width", width)
+      .attr("height", 450 - yScale(math))
+      .attr("fill", "blue")
+      .attr("opacity", .3);
+
+      xpos+=width;
+
+    svg.append("rect")
+      .attr("x", xpos)
+      .attr("y", yScale(writing))
+      .attr("width", width)
+      .attr("height", 450 - yScale(writing))
+      .attr("fill", "green")
+      .attr("opacity", .4);
+
+      xpos+=width;
+  }
+
+}
+
+generateBars(fundingData);
+//code for label arrangement adapted from http://bl.ocks.org/larskotthoff/11406992
+function arrangeLabels() {
+  var move = 1;
+  var svg = d3.select("#plot");
+  while(move > 0) {
+    move = 0;
+    svg.selectAll(".label")
+       .each(function() {
+         var that = this,
+             a = this.getBoundingClientRect();
+         svg.selectAll(".label")
+            .each(function() {
+              if(this != that) {
+                var b = this.getBoundingClientRect();
+                if((Math.abs(a.left - b.left) * 2 < (a.width + b.width)) &&
+                   (Math.abs(a.top - b.top) * 2 < (a.height + b.height))) {
+                  // overlap, move labels
+                  var dx = (Math.max(0, a.right - b.left) +
+                           Math.min(0, a.left - b.right)) * 0.01,
+                      dy = (Math.max(0, a.bottom - b.top) +
+                           Math.min(0, a.top - b.bottom)) * 0.005,
+                      tt = d3.transform(d3.select(this).attr("transform")),
+                      to = d3.transform(d3.select(that).attr("transform"));
+                  move += Math.abs(dx) + Math.abs(dy);
+                
+                  to.translate = [ to.translate[0] + dx, to.translate[1] + dy ];
+                  tt.translate = [ tt.translate[0] - dx, tt.translate[1] - dy ];
+                  d3.select(this).attr("transform", "translate(" + tt.translate + ")");
+                  d3.select(that).attr("transform", "translate(" + to.translate + ")");
+                  a = this.getBoundingClientRect();
+                }
+              }
+            });
+       });
+  }
+}
+
 </script>
 </html>
