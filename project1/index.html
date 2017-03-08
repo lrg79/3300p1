@@ -507,13 +507,13 @@ function generateGraph(){
   svg.append("g").attr("transform", "translate(50,0)").call(yAxis
     .ticks(5));
 
-  var sizeRange = d3.scaleLinear().range([5,20]).domain([d3.min(fundingData,function(d){
+  var sizeRange = d3.scalePow().range([5,20]).domain([d3.min(fundingData,function(d){
     return (d.participation);
   }), d3.max(fundingData, function(d){
     return (d.participation);
   })]);
 
-  var sizeLegend = d3.scaleLinear().range([0,240]).domain([0,100]);
+  var sizeLegend = d3.scalePow().range([0,240]).domain([0,100]);
 
   for(var i = 0; i < fundingData.length; i++){
     svg.append("circle")
