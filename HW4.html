@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+	<title>Leah Greenstein lrg79</title>
+	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="http://d3js.org/topojson.v2.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+	<div id = "one"></div>
+</body>
+
+<script>
+	
+	function plotHistogram(element, numbers){
+		//figure out what's up with y scale and y axis
+		var svg = d3.select(element)
+			.append("svg")
+			.attr("height", 400)
+			.attr("width", 500);
+
+		var xScale = d3.scaleLinear().range([50,450]).domain([0, numbers.length]);
+
+		var maxY = d3.max(numbers, function(d){
+			return d;
+		});
+
+		var yScale = d3.scaleLinear().range([350,50]).domain([0, maxY]);
+
+		console.log(d3.min(numbers), " ", d3.max(numbers));
+
+		var xAxis = d3.axisBottom(xScale);
+		svg.append("g").attr("transform", "translate(0,350)").call(xAxis
+			.ticks(20));
+
+		var yAxis = d3.axisLeft(yScale);
+		svg.append("g").attr("transform", "translate(50,0)").call(yAxis
+			.ticks(20));
+
+		var delta = 400 / numbers.length;
+		var xpos = 50;
+		//generate bar graph
+		for(var i = 0; i < numbers.length; i++){
+			svg.append("rect")
+				.attr("x", xpos)
+				.attr("y", yScale(numbers[i]))
+				.attr("width", delta)
+				.attr("height", 350 - yScale(numbers[i]))
+				.attr("opacity", .3)
+				.attr("fill", "blue");
+
+				console.log(yScale(numbers[i]));
+
+				xpos += delta;
+		}
+	}
+
+	//plotHistogram("#one", [1, 2, 3, 4]);
+
+	//fix this
+	function gaussian(){
+		return d3.randomNormal()();
+	}
+
+	function gaussian1000(){
+		var array= [];
+		for(var i = 0; i < 1000; i++){
+			array.push(gaussian());
+		}
+		console.log("hi");
+		console.log(array);
+		return array;
+	}
+
+	plotHistogram("#one", gaussian1000());
+	function lognormal1000(){
+
+	}
+
+	function exponential1000(){
+
+	}
+
+	function gamma1000(){
+
+	}
+
+	function cauchy1000(){
+
+	}
+
+	function showCircles(hue, opacity){
+
+	}
+
+</script>
+
+
+
+</html>
